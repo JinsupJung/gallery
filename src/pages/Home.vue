@@ -4,8 +4,8 @@
       <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           <div class="col" v-for="(item, idx) in states.items" :key="idx">
-<!--            <Card/>-->
-            {{item}}
+          <Card :item="item"/>
+<!--            {{ item}}-->
           </div>
         </div>
       </div>
@@ -18,10 +18,11 @@
 // import Card from "@/components/Card.vue";
 import axios from "axios";
 import {reactive} from "vue";
+import Card from "@/components/Card.vue";
 
 export default {
   name: "Home",
-  // components: {Card},
+  components: {Card},
   setup() {
     const states = reactive({
       items: []
