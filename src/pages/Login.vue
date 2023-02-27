@@ -1,31 +1,33 @@
 <template>
   <div class="form-signin w-100 m-auto">
-      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-      <div class="form-floating">
-        <input type="email" v-model="state.form.email" class="form-control" id="floatingInput"
-               placeholder="name@example.com">
-        <label for="floatingInput">Email address</label>
-      </div>
-      <div class="form-floating">
-        <input type="password"  v-model="state.form.password" class="form-control" id="floatingPassword"
-               placeholder="Password">
-        <label for="floatingPassword">Password</label>
-      </div>
+    <div class="form-floating">
+      <input type="email" v-model="state.form.email" class="form-control" id="floatingInput"
+             placeholder="name@example.com">
+      <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" v-model="state.form.password" class="form-control" id="floatingPassword"
+             placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
 
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
-      </div>
-      <button class="w-100 btn btn-lg btn-primary" @click="submit()">Sign in</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" @click="submit()">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
   </div>
 </template>
 
 <script>
 import {reactive} from "vue";
 import axios from "axios";
+import store from "@/scripts/store";
+import router from "@/scripts/router";
 
 export default {
   setup() {
@@ -38,9 +40,12 @@ export default {
 
     const submit = () => {
       axios.post("/api/account/login", state.form).then((res) => {
-        console.log(res);
-        console.log(state.form);
+            store.commit('setAccount', res.data);
+            console.log(res);
+            console.log(state.form);
             window.alert("로그인 성공");
+            router.push({path: "/"})
+
           }
       )
     }
