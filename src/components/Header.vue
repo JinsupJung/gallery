@@ -40,6 +40,7 @@ export default {
     const logout = () => {
       store.commit('setAccount', 0);
       router.push({path: "/"})
+      sessionStorage.removeItem("id");
 
     }
     return {logout};
