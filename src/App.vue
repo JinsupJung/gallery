@@ -8,6 +8,10 @@
 import Footer from "@/components/Footer.vue";
 import Header from "@/components/Header.vue";
 import store from "@/scripts/store";
+import axios from "axios";
+import {useRoute} from "vue-router";
+import {watch} from "vue";
+
 // import Home from "@/pages/Home.vue";
 
 export default {
@@ -18,10 +22,22 @@ export default {
     Footer,
   },
   setup() {
-    const id = sessionStorage.getItem("id");
-    if (id) {
-      store.commit('setAccount', id);
+    const check = () => {
+      axios.get("/api/account/check").then(({data})=>{
+        console.log(data);
+        store.commit("setAccount", data || 0);
+        }
+      )
     }
+    const route = useRoute(); // 현재 URL 정보 가져오기
+
+    watch(route, ()=>{ //경로가 바뀌면
+      check();
+    })
+    // const id = sessionStorage.getItem("id");
+    // if (id) {
+    //   store.commit('setAccount', id);
+    // }
   }
 }
 </script>
